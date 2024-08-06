@@ -1,0 +1,27 @@
+services:
+  otel-collector:
+    # image: otel/opentelemetry-collector-contrib
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    platform: linux/amd64
+    environment:
+      OTEL_CONFIG_BASE64: cmVjZWl2ZXJzOgogIG90bHA6CiAgICBwcm90b2NvbHM6CiAgICAgIGh0dHA6CiAgICAgICAgZW5kcG9pbnQ6IDAuMC4wLjA6NDMxOAoKZXhwb3J0ZXJzOgogIGRlYnVnOgogICAgdmVyYm9zaXR5OiBkZXRhaWxlZAoKc2VydmljZToKICBleHRlbnNpb25zOiBbaGVhbHRoX2NoZWNrXQogIHBpcGVsaW5lczoKICAgIGxvZ3M6CiAgICAgIHJlY2VpdmVyczogW290bHBdCiAgICAgIHByb2Nlc3NvcnM6IFtdCiAgICAgIGV4cG9ydGVyczogW2RlYnVnXQogICAgbWV0cmljczoKICAgICAgcmVjZWl2ZXJzOiBbb3RscF0KICAgICAgcHJvY2Vzc29yczogW10KICAgICAgZXhwb3J0ZXJzOiBbZGVidWddCiAgICB0cmFjZXM6CiAgICAgIHJlY2VpdmVyczogW290bHBdCiAgICAgIHByb2Nlc3NvcnM6IFtdCiAgICAgIGV4cG9ydGVyczogW2RlYnVnXQoKZXh0ZW5zaW9uczoKICBoZWFsdGhfY2hlY2s6Cg==
+    # command:
+    #   - '--config=/etc/otelcol-contrib/config.yaml'
+    #   - '--feature-gates=pkg.translator.prometheus.NormalizeName'
+    # volumes:
+    #   - ./monitoring/config/otel-dehydration-collector.yaml:/etc/otelcol-contrib/config.yaml
+    #   - ./monitoring/otlp:/data/collector:rw
+    ports:
+      - 8888:8888 # Prometheus metrics exposed by the Collector
+      - 8889:8889 # Prometheus exporter metrics
+      - 13133:13133 # health_check extension
+      - 4317:4317 # OTLP gRPC receiver
+      - 4318:4318 # OTLP http receiver
+    expose:
+      - '4318'
+    # networks:
+    #   - tel-col-net
+    # profiles:
+    #   - monitoring
