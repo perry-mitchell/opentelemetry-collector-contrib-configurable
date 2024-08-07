@@ -14,3 +14,4 @@ services:
       - 4318:4318 # OTLP http receiver
     expose:
       - '4318'
+      - '13133'

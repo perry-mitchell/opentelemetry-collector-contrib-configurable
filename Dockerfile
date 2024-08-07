@@ -7,7 +7,7 @@ WORKDIR /
 COPY --from=otel /otelcol-contrib /otelcol-contrib
 COPY start.sh /start.sh
 
-EXPOSE 4317 55680 55679
+EXPOSE 4317 4318 55680 55679 13133
 
 ENTRYPOINT ["/start.sh"]
-CMD ["/otelcol-contrib", "--config", "/etc/otel/config.yaml"]
+CMD ["/otelcol-contrib", "--config", "/etc/otel/config.yaml", "--feature-gates=-component.UseLocalHostAsDefaultHost"]
